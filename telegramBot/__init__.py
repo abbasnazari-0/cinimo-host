@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 import os.path
-# import uvloop
+import uvloop
 import sys
 
 path = os.path.dirname(__file__)
@@ -12,7 +12,7 @@ import upload_video
 import utils
 import message_conversation
 
-# uvloop.install()
+uvloop.install()
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757

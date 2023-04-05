@@ -24,7 +24,9 @@ app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAE
 # welcome text 
 @app.on_message(filters.command('start'))
 def start(client, message):
-  client.send_message(chat_id=message.chat.id, text="سلام به ربات ادمین سینیمو خوش آمدید")
+  message.reply_text("""سلام من رباتی هستم که میتونم لینک های شما رو دانلود کنم و براتون بفرستم \n
+  لطفا لینک های خود را ارسال کنید 
+  """)
 
 
 # unfound message

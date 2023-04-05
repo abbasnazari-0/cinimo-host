@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 import os.path
-import uvloop
+# import uvloop
 import sys
 
 path = os.path.dirname(__file__)
@@ -12,7 +12,7 @@ import upload_video
 import utils
 import message_conversation
 
-uvloop.install()
+# uvloop.install()
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
@@ -24,9 +24,7 @@ app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAE
 # welcome text 
 @app.on_message(filters.command('start'))
 def start(client, message):
-  message.reply("""سلام من رباتی هستم که میتونم لینک های شما رو دانلود کنم و براتون بفرستم \n
-  لطفا لینک های خود را ارسال کنید 
-  """)
+  message.reply("سلام ❤️😍 \n من رباتی هستم که میتونم لینک های شما  و فایل های شما رو دانلود کنم و براتون بفرستم 🔗⬆️ \n لطفا لینک های خود را ارسال کنید  🔗 \n و یه فایل های عکسی و ویدیو رو مستقیم بفرستید🖼📹 \n من برات یه تگ میفرستم که میتونی اونو به اپ سینیمو اضافه کنی😎")
 
 
 # unfound message

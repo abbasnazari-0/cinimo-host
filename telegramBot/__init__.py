@@ -12,7 +12,7 @@ import upload_video
 import utils
 import message_conversation
 
-uvloop.install()
+
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
@@ -48,3 +48,4 @@ async def hello(client, message):
     # 
 
 app.run()
+uvloop.install()

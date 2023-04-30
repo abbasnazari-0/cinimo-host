@@ -81,7 +81,7 @@ function submitNumber($conn){
         // Send code by sms api and save code in database
         $code = rand(100000, 999999);
         $date = time();
-        echo $date;
+        
 
         if(sendCode($_REQUEST['phone'],$code)){
             $sql = "INSERT INTO tbl_otp (phone, code, lastSent, timeAttempt) VALUES ('".$_REQUEST['phone']."', '$code', '$date', '1')";
@@ -139,15 +139,47 @@ function validateCode($conn){
 
 // send sms by url api to sms.ir
 function sendCode($phone,$code){
-    // $url = "https://api.sms.ir/v1/send?Username=9301664104&Password=QO5KtoFwZyxsjOQe5iW7PA4seg2AxdaX6beZUtJuTQmBcQwQAlnROtb6UBhNpkG0&Line=30007732009492&mobile=".$phone."&Text=".$code;
-    // $ch = curl_init($url);
-    // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // $result = curl_exec($ch);
-    // curl_close($ch);
-    // $res = json_decode($result, true);
-    // if($res['status'] == 1){
+  
+      $curl = curl_init();
+
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.sms.ir/v1/send/verify',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>'{
+        "mobile": "'.$phone.'",
+        "templateId": 685360,
+        "parameters": [
+          {
+            "name": "code",
+            "value": "'.$code.'"
+          }
+        ]
+      }',
+        CURLOPT_HTTPHEADER => array(
+          'Content-Type: application/json',
+          'Accept: text/plain',
+          'x-api-key: QO5KtoFwZyxsjOQe5iW7PA4seg2AxdaX6beZUtJuTQmBcQwQAlnROtb6UBhNpkG0'
+        ),
+      ));
+
+      $response = curl_exec($curl);
+
+      curl_close($curl);
+      
+    //   {"status":1,"message":"موفق","data":{"messageId":7957730,"cost":1.20}}
+    
+  
+     $res = json_decode($response, true);
+    if($res['status'] == 1){
         return true;
-    // }
+    }
     return false;
+    
+    
 }

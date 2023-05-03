@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 import os.path
-import uvloop
+# import uvloop
 import sys
 
 path = os.path.dirname(__file__)
@@ -17,7 +17,7 @@ import message_conversation
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
 ApiHash = "9572884801dd15dcbb4ae2104ee26573"
-app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAEAJFUsMSq28vnZPwwKlr6T3vXotvC6XPI")
+app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAEY6gRCAXlkTcvKZ-UinwGbvZggwLhAYFg")
 
 
 
@@ -48,4 +48,4 @@ async def hello(client, message):
     # 
 
 app.run()
-uvloop.install()
+# uvloop.install()

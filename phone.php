@@ -139,15 +139,15 @@ function validateCode($conn){
 
 // send sms by url api to sms.ir
 function sendCode($phone,$code){
-    // $url = "https://api.sms.ir/v1/send?Username=9301664104&Password=QO5KtoFwZyxsjOQe5iW7PA4seg2AxdaX6beZUtJuTQmBcQwQAlnROtb6UBhNpkG0&Line=30007732009492&mobile=".$phone."&Text=".$code;
-    // $ch = curl_init($url);
-    // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // $result = curl_exec($ch);
-    // curl_close($ch);
-    // $res = json_decode($result, true);
-    // if($res['status'] == 1){
+    $url = "https://api.sms.ir/v1/send?Username=9301664104&Password=QO5KtoFwZyxsjOQe5iW7PA4seg2AxdaX6beZUtJuTQmBcQwQAlnROtb6UBhNpkG0&Line=30007732009492&mobile=".$phone."&Text=".$code;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    $res = json_decode($result, true);
+    if($res['status'] == 1){
         return true;
-    // }
+    }
     return false;
 }

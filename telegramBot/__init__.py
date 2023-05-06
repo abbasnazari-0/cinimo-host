@@ -1,16 +1,12 @@
-from pyrogram import Client, filters
+import asyncio
 import os.path
-# import uvloop
+import uvloop
 import sys
 import threading
 path = os.path.dirname(__file__)
 sys.path.append(path + "/functions")
-
-import link_down_up
-import upload_image
-import upload_video
 import utils
-import message_conversation
+import file_uploader
 
 import tracemalloc
 tracemalloc.start()
@@ -21,15 +17,12 @@ ApiId = 732757
 ApiHash = "9572884801dd15dcbb4ae2104ee26573"
 app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAHyW_9W0cxlVmFh8b1FEbJOV65xtpize2w")
 
-
-
-# welcome text 
+# welcome text  
 @app.on_message(filters.command('start'))
-def start(client, message):
-  message.reply("سلام ❤️😍 \n من رباتی هستم که میتونم لینک های شما  و فایل های شما رو دانلود کنم و براتون بفرستم 🔗⬆️ \n لطفا لینک های خود را ارسال کنید  🔗 \n و یه فایل های عکسی و ویدیو رو مستقیم بفرستید🖼📹 \n من برات یه تگ میفرستم که میتونی اونو به اپ سینیمو اضافه کنی😎")
+async def start(client, message):
+    await message.reply("سلام ❤️😍 \n من رباتی هستم که میتونم لینک های شما  و فایل های شما رو دانلود کنم و براتون بفرستم 🔗⬆️ \n لطفا لینک های خود را ارسال کنید  🔗 \n و یه فایل های عکسی و ویدیو رو مستقیم بفرستید🖼📹 \n من برات یه تگ میفرستم که میتونی اونو به اپ سینیمو اضافه کنی😎")
 
 
-# unfound message
 @app.on_message(filters.private)
 async def hello(client, message):
 #   message =  str (message.text)# detect link
@@ -54,4 +47,4 @@ async def hello(client, message):
     # 
 
 app.run()
-# uvloop.install()
+uvloop.install()

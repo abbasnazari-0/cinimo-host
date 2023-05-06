@@ -1,14 +1,15 @@
-def uploadFile(fileName, path, folder):
+async def uploadFile(fileName, path, folder):
     import boto3
     import logging
     from botocore.exceptions import ClientError
+    import os
 
     # Configure logging
     logging.basicConfig(level=logging.INFO)
 
     try:
         s3_resource = boto3.resource(
-            's3',
+            's3',   
             endpoint_url='https://s3.ir-thr-at1.arvanstorage.com',
             aws_access_key_id='ef780d49-5c4c-4760-bb70-af06e75a8159',
             aws_secret_access_key='6128430f490b343dd3a93fa1a420e2cb23ce33f0'
@@ -31,3 +32,5 @@ def uploadFile(fileName, path, folder):
                 )
         except ClientError as e:
             logging.error(e)
+    # remove file from local
+    os.remove(path)

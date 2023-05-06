@@ -10,6 +10,8 @@ import file_uploader
 
 import tracemalloc
 tracemalloc.start()
+from pyrogram import Client, filters
+
 
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values

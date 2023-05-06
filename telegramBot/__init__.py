@@ -1,6 +1,6 @@
 import asyncio
 import os.path
-import uvloop
+# import uvloop
 import sys
 import threading
 path = os.path.dirname(__file__)
@@ -17,6 +17,9 @@ import upload_image
 import upload_video
 import utils
 import message_conversation
+
+
+
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
@@ -52,5 +55,7 @@ async def hello(client, message):
     #  other else message
     # 
 
+# uvloop.install()
+
+
 app.run()
-uvloop.install()

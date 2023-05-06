@@ -1,8 +1,8 @@
 from pyrogram import Client, filters
 import os.path
-import uvloop
+# import uvloop
 import sys
-
+import threading
 path = os.path.dirname(__file__)
 sys.path.append(path + "/functions")
 
@@ -12,12 +12,14 @@ import upload_video
 import utils
 import message_conversation
 
+import tracemalloc
+tracemalloc.start()
 
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
 ApiHash = "9572884801dd15dcbb4ae2104ee26573"
-app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAEY6gRCAXlkTcvKZ-UinwGbvZggwLhAYFg")
+app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAHyW_9W0cxlVmFh8b1FEbJOV65xtpize2w")
 
 
 
@@ -39,13 +41,17 @@ async def hello(client, message):
         await message_conversation.message_conversation(message)
         
   elif message.photo:
-    await upload_image.upload_image(message, path, client)
+    my_thread = threading.Thread(target=upload_image.upload_image, args=(message, path, client))
+    my_thread.start()
+
   elif message.video:
-    await upload_video.upload_video(message, path, client)
+    my_thread = threading.Thread(target=upload_video.upload_video, args=(message, path, client))
+    my_thread.start()
+    
   else:
     await message.reply("متاسفانه پیام شما برای من قابل درک نیست")
     #  other else message
     # 
 
 app.run()
-uvloop.install()
+# uvloop.install()

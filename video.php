@@ -25,7 +25,26 @@ function getVideo($conn){
 
 $user_tag = $_REQUEST['user_tag'];
 // get video data
-$sql = "SELECT tbl_video.id,tbl_video.title, tbl_video.imdb,tbl_video.tag, tbl_video.desc, tbl_video.artist_tags, tbl_video.thumbnail_1x, tbl_video.thumbnail_2x, tbl_video.qualities_id,tbl_video.gallery_id,tbl_video.video_tags  ,tbl_video_quality.quality_1080,tbl_video_quality.quality_1440, tbl_video_quality.quality_2160, tbl_video_quality.quality_240, tbl_video_quality.quality_360, tbl_video_quality.quality_4320, tbl_video_quality.quality_480, tbl_video_quality.quality_720 , COUNT(tbl_view.user_tag) AS view, COUNT(tbl_user_like.id)  AS user_liked, COUNT(tbl_user_bookmark.id) AS user_bookmarked FROM tbl_video INNER JOIN  tbl_video_quality ON tbl_video.qualities_id = tbl_video_quality.quality_id  LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag LEFT JOIN tbl_user_like ON tbl_user_like.vid_tag = tbl_video.tag AND tbl_user_like.user_tag = '$user_tag' LEFT JOIN tbl_user_bookmark ON tbl_user_bookmark.vid_tag = tbl_video.tag AND tbl_user_bookmark.user_tag = '$user_tag' WHERE tag = '$tag' LIMIT 1";
+$sql = "SELECT tbl_video.id,tbl_video.title, tbl_video.imdb,tbl_video.tag, tbl_video.desc, tbl_video.artist_tags, tbl_video.thumbnail_1x, tbl_video.thumbnail_2x, tbl_video.qualities_id,tbl_video.gallery_id,tbl_video.video_tags  ,tbl_video_quality.quality_1080,tbl_video_quality.quality_1440, tbl_video_quality.quality_2160, tbl_video_quality.quality_240, tbl_video_quality.quality_360, tbl_video_quality.quality_4320, tbl_video_quality.quality_480, tbl_video_quality.quality_720 , COUNT(tbl_view.user_tag) AS view, COUNT(tbl_user_like.id)  AS user_liked, COUNT(tbl_user_bookmark.id) AS user_bookmarked FROM tbl_video INNER JOIN  tbl_video_quality ON tbl_video.qualities_id = tbl_video_quality.quality_id  LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag LEFT JOIN tbl_user_like ON tbl_user_like.vid_tag = tbl_video.tag AND tbl_user_like.user_tag = '$user_tag' LEFT JOIN tbl_user_bookmark ON tbl_user_bookmark.vid_tag = tbl_video.tag AND tbl_user_bookmark.user_tag = '$user_tag' WHERE tag = '$tag'  GROUP BY
+    tbl_video.id,
+    tbl_video.title,
+    tbl_video.imdb,
+    tbl_video.tag,
+    tbl_video.DESC,
+    tbl_video.artist_tags,
+    tbl_video.thumbnail_1x,
+    tbl_video.thumbnail_2x,
+    tbl_video.qualities_id,
+    tbl_video.gallery_id,
+    tbl_video.video_tags,
+    tbl_video_quality.quality_1080,
+    tbl_video_quality.quality_1440,
+    tbl_video_quality.quality_2160,
+    tbl_video_quality.quality_240,
+    tbl_video_quality.quality_360,
+    tbl_video_quality.quality_4320,
+    tbl_video_quality.quality_480,
+    tbl_video_quality.quality_720 LIMIT 1";
 
 // execute query
 $result = mysqli_query($conn, $sql);
@@ -87,13 +106,14 @@ if (mysqli_num_rows($result) > 0) {
     $data = $row;
     
   }
-//   echo ($artist_sql);
     echo json_encode($data);
 } else {
   echo "0 results";
 }
 
 }
+
+
 
 function submitVideo($conn){
     $imdb = $_REQUEST['imdb'];

@@ -24,7 +24,7 @@ import message_conversation
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
 ApiHash = "9572884801dd15dcbb4ae2104ee26573"
-app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5584893618:AAGocgNDat1Am7hjQCpXrX3qcTI3ojPgGi8")
+app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAHyW_9W0cxlVmFh8b1FEbJOV65xtpize2w")
 
 # welcome text  
 @app.on_message(filters.command('start'))

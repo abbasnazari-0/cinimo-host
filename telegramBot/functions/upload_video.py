@@ -1,10 +1,6 @@
 import utils
 import os
 import ftplib
-from moviepy.editor import VideoFileClip, concatenate_videoclips
-from moviepy.editor import * 
-import cv2
-import ffmpeg
 import subprocess
 
 def upload_video(message, path, client):

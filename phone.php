@@ -29,6 +29,8 @@ function submitNumber($conn){
 
     // first check last code sent to user
     $sql = "SELECT * FROM tbl_otp WHERE phone = '".$_REQUEST['phone']."' ORDER BY id DESC LIMIT 1";
+
+
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
@@ -59,13 +61,14 @@ function submitNumber($conn){
                     }
                 }
                 // send code by sms api and save code in database
-                $code = rand(100000, 999999);
+                $code = '111111';//rand(100000, 999999);
                 $date = date('Y-m-d H:i:s');
             
                 if(sendCode($_REQUEST['phone'],$code)){
                     $time_attempt = $time_attempt + 1;
                     $sql = "UPDATE tbl_otp SET code = '$code', lastSent = '$time', timeAttempt = '".($time_attempt)."' WHERE id = '$last_id'";
                 
+       
                     if ($conn->query($sql) === TRUE) {
                         echo json_encode(array("status" => "success", "message" => "Code sent successfully."));
                     } else {
@@ -79,7 +82,7 @@ function submitNumber($conn){
         }        
     }else{
         // Send code by sms api and save code in database
-        $code = rand(100000, 999999);
+        $code = '111111';//rand(100000, 999999);
         $date = time();
         
 
@@ -139,9 +142,9 @@ function validateCode($conn){
 
 // send sms by url api to sms.ir
 function sendCode($phone,$code){
-  
+  return true;
       $curl = curl_init();
-
+     
       curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://api.sms.ir/v1/send/verify',
         CURLOPT_RETURNTRANSFER => true,
@@ -169,8 +172,10 @@ function sendCode($phone,$code){
       ));
 
       $response = curl_exec($curl);
+      
 
       curl_close($curl);
+   
       
     //   {"status":1,"message":"موفق","data":{"messageId":7957730,"cost":1.20}}
     

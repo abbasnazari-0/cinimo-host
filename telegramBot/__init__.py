@@ -1,10 +1,16 @@
-from pyrogram import Client, filters
+import asyncio
 import os.path
 # import uvloop
 import sys
-
+import threading
 path = os.path.dirname(__file__)
 sys.path.append(path + "/functions")
+import utils
+import file_uploader
+
+import tracemalloc
+tracemalloc.start()
+from pyrogram import Client, filters
 
 import link_down_up
 import upload_image
@@ -13,21 +19,23 @@ import utils
 import message_conversation
 
 
+
 # create 
 # Replace YOUR_API_ID and YOUR_API_HASH with your own values
 ApiId = 732757
 ApiHash = "9572884801dd15dcbb4ae2104ee26573"
+<<<<<<< HEAD
 app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAEY6gRCAXlkTcvKZ-UinwGbvZggwLhAYFg")
+=======
+app = Client("my_bot", api_id=ApiId, api_hash=ApiHash, bot_token="5520564422:AAHyW_9W0cxlVmFh8b1FEbJOV65xtpize2w")
+>>>>>>> 1778547d239babd54084329e251501223a8d91c9
 
-
-
-# welcome text 
+# welcome text  
 @app.on_message(filters.command('start'))
-def start(client, message):
-  message.reply("سلام ❤️😍 \n من رباتی هستم که میتونم لینک های شما  و فایل های شما رو دانلود کنم و براتون بفرستم 🔗⬆️ \n لطفا لینک های خود را ارسال کنید  🔗 \n و یه فایل های عکسی و ویدیو رو مستقیم بفرستید🖼📹 \n من برات یه تگ میفرستم که میتونی اونو به اپ سینیمو اضافه کنی😎")
+async def start(client, message):
+    await message.reply("سلام ❤️😍 \n من رباتی هستم که میتونم لینک های شما  و فایل های شما رو دانلود کنم و براتون بفرستم 🔗⬆️ \n لطفا لینک های خود را ارسال کنید  🔗 \n و یه فایل های عکسی و ویدیو رو مستقیم بفرستید🖼📹 \n من برات یه تگ میفرستم که میتونی اونو به اپ سینیمو اضافه کنی😎")
 
 
-# unfound message
 @app.on_message(filters.private)
 async def hello(client, message):
 #   message =  str (message.text)# detect link
@@ -39,13 +47,24 @@ async def hello(client, message):
         await message_conversation.message_conversation(message)
         
   elif message.photo:
-    await upload_image.upload_image(message, path, client)
+    my_thread = threading.Thread(target=upload_image.upload_image, args=(message, path, client))
+    my_thread.start()
+
   elif message.video:
-    await upload_video.upload_video(message, path, client)
+    my_thread = threading.Thread(target=upload_video.upload_video, args=(message, path, client))
+    my_thread.start()
+    
   else:
     await message.reply("متاسفانه پیام شما برای من قابل درک نیست")
     #  other else message
     # 
 
+<<<<<<< HEAD
 app.run()
 # uvloop.install()
+=======
+# uvloop.install()
+
+
+app.run()
+>>>>>>> 1778547d239babd54084329e251501223a8d91c9

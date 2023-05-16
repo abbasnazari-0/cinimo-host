@@ -2,7 +2,7 @@
 // connect to mysql
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "nazari@0794";
 $dbname = "cinimo";
 
 // Create connection
@@ -14,7 +14,7 @@ if (!$conn) {
 
 
 // Change character set to utf8
-mysqli_set_charset($conn,"utf8");
+mysqli_set_charset($conn,"utf8mb4");
 
 
 // function that create string of random characters

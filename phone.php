@@ -61,7 +61,7 @@ function submitNumber($conn){
                     }
                 }
                 // send code by sms api and save code in database
-                $code = '111111';//rand(100000, 999999);
+                $code = rand(100000, 999999);
                 $date = date('Y-m-d H:i:s');
             
                 if(sendCode($_REQUEST['phone'],$code)){
@@ -82,7 +82,7 @@ function submitNumber($conn){
         }        
     }else{
         // Send code by sms api and save code in database
-        $code = '111111';//rand(100000, 999999);
+        $code = rand(100000, 999999);
         $date = time();
         
 
@@ -142,7 +142,6 @@ function validateCode($conn){
 
 // send sms by url api to sms.ir
 function sendCode($phone,$code){
-  return true;
       $curl = curl_init();
      
       curl_setopt_array($curl, array(

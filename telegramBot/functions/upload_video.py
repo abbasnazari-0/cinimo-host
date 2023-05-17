@@ -14,18 +14,18 @@ def upload_video(message, path, client):
     client.download_media(message=video, file_name=npath)
     
 
-    wateMark =  path + f"/files/" + "water.mp4"
+    # wateMark =  path + f"/files/" + "water.mp4"
     
 
-    command = 'ffmpeg -i '+wateMark+' -i '+npath+' -filter_complex "[0:v]scale=1366:768:force_original_aspect_ratio=1,pad=1366:768:-1:-1,setsar=1[v0]; [1:v]scale=1366:768:force_original_aspect_ratio=1,pad=1366:768:-1:-1,setsar=1[v1]; [v0][0:a][v1][1:a]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -crf 18 -c:a aac -strict experimental ' + path + f"/files/videos/" + file_id + "-w.mp4" + '  -y ' 
+    # command = 'ffmpeg -i '+wateMark+' -i '+npath+' -filter_complex "[0:v]scale=1366:768:force_original_aspect_ratio=1,pad=1366:768:-1:-1,setsar=1[v0]; [1:v]scale=1366:768:force_original_aspect_ratio=1,pad=1366:768:-1:-1,setsar=1[v1]; [v0][0:a][v1][1:a]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -crf 18 -c:a aac -strict experimental ' + path + f"/files/videos/" + file_id + "-w.mp4" + '  -y ' 
 
-    try:
-        subprocess.check_output(command, shell=True)
-        print("FFmpeg command executed successfully.")
-        npath = path + f"/files/videos/" + file_id + "-w.mp4" ;
-    except subprocess.CalledProcessError as e:
-        print("Error executing FFmpeg command:", e)
-        npath = path + f"/files/videos/" + file_id + ".mp4" ;
+    # try:
+    #     subprocess.check_output(command, shell=True)
+    #     print("FFmpeg command executed successfully.")
+    #     npath = path + f"/files/videos/" + file_id + "-w.mp4" ;
+    # except subprocess.CalledProcessError as e:
+    #     print("Error executing FFmpeg command:", e)
+    #     npath = path + f"/files/videos/" + file_id + ".mp4" ;
 
 
    

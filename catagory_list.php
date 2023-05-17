@@ -49,12 +49,13 @@ function getCatagories($conn){
 
     // execute query
     $result = mysqli_query($conn, $sql);
-    $data = array();
+   
     if (mysqli_num_rows($result) > 0) {
-        while($sub_row = mysqli_fetch_assoc($result)) { 
-            $data[] = $sub_row;
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) { 
+            $data[] = $row;
         }
-        json_encode($data);
+        echo json_encode($data);
     }else{
         return json_encode([]);
     }

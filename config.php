@@ -2,7 +2,7 @@
 // connect to mysql
 $servername = "localhost";
 $username = "root";
-$password = "nazari@0794";
+$password = "";
 $dbname = "cinimo";
 
 // Create connection

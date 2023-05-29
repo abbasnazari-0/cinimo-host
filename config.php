@@ -34,34 +34,80 @@ $visitor =  $_SERVER['REMOTE_ADDR'];
 // echo  ipData($user_ip);
 
 
+// check if excit in database 
+$sql = "SELECT * FROM tbl_ip_cach WHERE ip = '$visitor'";
 
-$ch = curl_init();
+$result = mysqli_query($conn, $sql);
+if(mysqli_num_rows($result) == 0){
+ 
 
-curl_setopt($ch, CURLOPT_URL,"http://newapp.abbasnazari.com/ip.php");
-curl_setopt($ch, CURLOPT_POST, 1);
+  $ch = curl_init();
 
-// In real life you should use something like:
- curl_setopt($ch, CURLOPT_POSTFIELDS, 
-          http_build_query(array('ip' => $visitor)));
+  curl_setopt($ch, CURLOPT_URL,"http://newapp.abbasnazari.com/ip.php");
+  curl_setopt($ch, CURLOPT_POST, 1);
 
-// Receive server response ...
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  // In real life you should use something like:
+  curl_setopt($ch, CURLOPT_POSTFIELDS, 
+            http_build_query(array('ip' => $visitor)));
 
-$server_output = curl_exec($ch);
+  // Receive server response ...
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-curl_close($ch);
+  $server_output = curl_exec($ch);
+
+  curl_close($ch);
+
+  $ipData = json_decode($server_output, true);
+  if(!key_exists("country", $ipData) ||  $ipData['country'] != "IR" ){
+    $GLOBALS['COUNTRY'] = "KA";
+    $GLOBALS['table_video'] = "tbl_video_fake";
+    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
+    $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";
+  }else{
+    $GLOBALS['COUNTRY'] = "IR";
+    $GLOBALS['table_video'] = "tbl_video";
+    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry";
+    $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory";
+  }
+
+  
+  // $sql = "INSERT IGNORE INTO tbl_ip_cach (ip, country, `last_visit`) VALUES ('$visitor', '".$GLOBALS['COUNTRY']."', 'NOW()')";
+  // isert if not  exist ip  in ip column
+  $time = time();
+  $sql = "INSERT INTO tbl_ip_cach (ip, country, `last_visit`) SELECT * FROM (SELECT '$visitor', '".$GLOBALS['COUNTRY']."', '$time') AS tmp WHERE NOT EXISTS (SELECT ip FROM tbl_ip_cach WHERE ip = '$visitor') LIMIT 1";
 
 
-$ipData = json_decode($server_output, true);
-if(!key_exists("country", $ipData) ||  $ipData['country'] != "IR" ){
-  $GLOBALS['COUNTRY'] = "KA";
-  $GLOBALS['table_video'] = "tbl_video_fake";
-  $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
-  $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";
+
+  mysqli_query($conn, $sql);
+  if (mysqli_query($conn, $sql)) {
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+  }
+
 }else{
-  $GLOBALS['COUNTRY'] = "IR";
-  $GLOBALS['table_video'] = "tbl_video";
-  $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry";
-  $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory";
 
+  while($row = mysqli_fetch_assoc($result)) {
+    if($row['country'] != "IR"){
+      $GLOBALS['COUNTRY'] = "KA";
+      $GLOBALS['table_video'] = "tbl_video_fake";
+      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
+      $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";
+    }else{
+      $GLOBALS['COUNTRY'] = "IR";
+      $GLOBALS['table_video'] = "tbl_video";
+      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry";
+      $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory";
+    }
+  }
+
+  $time = time();
+
+  $sql = "UPDATE tbl_ip_cach SET last_visit = '$time' WHERE ip = '$visitor'";
+  mysqli_query($conn, $sql);
+  if (mysqli_query($conn, $sql)) {
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+  }
 }
+
+// get country code

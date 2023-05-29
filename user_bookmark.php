@@ -18,7 +18,7 @@ if($type == "remove"){
 function getUserBookmark($conn){
     $user_tag = $_REQUEST['user_tag'];
     // get comment data
-    $sql = "SELECT tbl_video.id, tbl_video.title, tbl_video.imdb, tbl_video.tag, tbl_video.desc,tbl_video.thumbnail_1x  , COUNT(tbl_view.id) AS view FROM tbl_video INNER JOIN tbl_user_bookmark ON tbl_video.tag = tbl_user_bookmark.vid_tag LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag WHERE tbl_user_bookmark.user_tag = '$user_tag' GROUP BY tbl_video.id";
+    $sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  , COUNT(tbl_view.id) AS view FROM ".$GLOBALS['table_video']." INNER JOIN tbl_user_bookmark ON ".$GLOBALS['table_video'].".tag = tbl_user_bookmark.vid_tag LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag WHERE tbl_user_bookmark.user_tag = '$user_tag' GROUP BY ".$GLOBALS['table_video'].".id";
     
     // execute query
     $result = mysqli_query($conn, $sql);

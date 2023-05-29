@@ -23,7 +23,7 @@ function attach($conn){
     $tag = $_REQUEST['tag'];
     $attach_value = $_REQUEST['attach_value'];
     $sql = "
-    UPDATE tbl_main_catagory 
+    UPDATE ".$GLOBALS['tbl_main_catagory']." 
     SET `values` = CONCAT(`values`, ',$attach_value')
     WHERE tag = '$tag'
 ";
@@ -38,7 +38,7 @@ function dettach($conn){
     $tag = $_REQUEST['tag'];
     $attach_value = $_REQUEST['attach_value'];
     $sql = "
- UPDATE tbl_main_catagory  
+ UPDATE ".$GLOBALS['tbl_main_catagory']."  
  SET `values` = TRIM(',' FROM 
    REPLACE(`values`, '$attach_value,', '') 
  )

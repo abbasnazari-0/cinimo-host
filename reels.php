@@ -2,7 +2,7 @@
 
 require_once 'config.php';
 
-$type = $_REQUEST['type'];
+$type = @$_REQUEST['type'];
 
 if($type == "add"){
     AddReels($conn);

@@ -25,18 +25,18 @@ function getVideo($conn){
 
 $user_tag = $_REQUEST['user_tag'];
 // get video data
-$sql = "SELECT tbl_video.id,tbl_video.title, tbl_video.imdb,tbl_video.tag, tbl_video.desc, tbl_video.artist_tags, tbl_video.thumbnail_1x, tbl_video.thumbnail_2x, tbl_video.qualities_id,tbl_video.gallery_id,tbl_video.video_tags  ,tbl_video_quality.quality_1080,tbl_video_quality.quality_1440, tbl_video_quality.quality_2160, tbl_video_quality.quality_240, tbl_video_quality.quality_360, tbl_video_quality.quality_4320, tbl_video_quality.quality_480, tbl_video_quality.quality_720 , COUNT(tbl_view.user_tag) AS view, COUNT(tbl_user_like.id)  AS user_liked, COUNT(tbl_user_bookmark.id) AS user_bookmarked FROM tbl_video INNER JOIN  tbl_video_quality ON tbl_video.qualities_id = tbl_video_quality.quality_id  LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag LEFT JOIN tbl_user_like ON tbl_user_like.vid_tag = tbl_video.tag AND tbl_user_like.user_tag = '$user_tag' LEFT JOIN tbl_user_bookmark ON tbl_user_bookmark.vid_tag = tbl_video.tag AND tbl_user_bookmark.user_tag = '$user_tag' WHERE tag = '$tag'  GROUP BY
-    tbl_video.id,
-    tbl_video.title,
-    tbl_video.imdb,
-    tbl_video.tag,
-    tbl_video.DESC,
-    tbl_video.artist_tags,
-    tbl_video.thumbnail_1x,
-    tbl_video.thumbnail_2x,
-    tbl_video.qualities_id,
-    tbl_video.gallery_id,
-    tbl_video.video_tags,
+$sql = "SELECT ".$GLOBALS['table_video'].".id,".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb,".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc, ".$GLOBALS['table_video'].".artist_tags, ".$GLOBALS['table_video'].".thumbnail_1x, ".$GLOBALS['table_video'].".thumbnail_2x, ".$GLOBALS['table_video'].".qualities_id,".$GLOBALS['table_video'].".gallery_id,".$GLOBALS['table_video'].".video_tags  ,tbl_video_quality.quality_1080,tbl_video_quality.quality_1440, tbl_video_quality.quality_2160, tbl_video_quality.quality_240, tbl_video_quality.quality_360, tbl_video_quality.quality_4320, tbl_video_quality.quality_480, tbl_video_quality.quality_720 , COUNT(tbl_view.user_tag) AS view, COUNT(tbl_user_like.id)  AS user_liked, COUNT(tbl_user_bookmark.id) AS user_bookmarked FROM ".$GLOBALS['table_video']." INNER JOIN  tbl_video_quality ON ".$GLOBALS['table_video'].".qualities_id = tbl_video_quality.quality_id  LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag LEFT JOIN tbl_user_like ON tbl_user_like.vid_tag = ".$GLOBALS['table_video'].".tag AND tbl_user_like.user_tag = '$user_tag' LEFT JOIN tbl_user_bookmark ON tbl_user_bookmark.vid_tag = ".$GLOBALS['table_video'].".tag AND tbl_user_bookmark.user_tag = '$user_tag' WHERE tag = '$tag'  GROUP BY
+    ".$GLOBALS['table_video'].".id,
+    ".$GLOBALS['table_video'].".title,
+    ".$GLOBALS['table_video'].".imdb,
+    ".$GLOBALS['table_video'].".tag,
+    ".$GLOBALS['table_video'].".DESC,
+    ".$GLOBALS['table_video'].".artist_tags,
+    ".$GLOBALS['table_video'].".thumbnail_1x,
+    ".$GLOBALS['table_video'].".thumbnail_2x,
+    ".$GLOBALS['table_video'].".qualities_id,
+    ".$GLOBALS['table_video'].".gallery_id,
+    ".$GLOBALS['table_video'].".video_tags,
     tbl_video_quality.quality_1080,
     tbl_video_quality.quality_1440,
     tbl_video_quality.quality_2160,
@@ -186,7 +186,7 @@ function submitVideo($conn){
 
     $videoTag = randomString(15);
     // insert video data to tbl_video
-    $video_sql = "INSERT INTO tbl_video (`title`, `imdb`, `tag`, `desc`, `artist_tags`, `thumbnail_1x`, `thumbnail_2x` ,`qualities_id`, `gallery_id`, `video_tags`) VALUES ('$title', '$imdb','$videoTag',  '$desc', '$artistTags', '$thumbnail_1x', '$thumbnail_2x', '$quaility_id', '$gallery_id', '$videoTags');";
+    $video_sql = "INSERT INTO ".$GLOBALS['table_video']." (`title`, `imdb`, `tag`, `desc`, `artist_tags`, `thumbnail_1x`, `thumbnail_2x` ,`qualities_id`, `gallery_id`, `video_tags`) VALUES ('$title', '$imdb','$videoTag',  '$desc', '$artistTags', '$thumbnail_1x', '$thumbnail_2x', '$quaility_id', '$gallery_id', '$videoTags');";
 
     $multiple_insert_query = $video_quality_sql . $gallery_sql . $video_sql;
 

@@ -46,8 +46,8 @@ if (mysqli_num_rows($result) > 0) {
 
 
 //now should get all video id with tag id
-// AND tbl_video.tag <> '$video_select'
-$sql = "SELECT tbl_video.id, tbl_video.title, tbl_video.imdb, tbl_video.tag, tbl_video.desc,tbl_video.thumbnail_1x  , COUNT(user_tag) AS view FROM tbl_video LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag WHERE video_tags LIKE '%".implode("%' OR video_tags LIKE '%", $data)."%'  GROUP BY tbl_video.id  LIMIT 10";
+// AND ".$GLOBALS['table_video']."tag <> '$video_select'
+$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  , COUNT(user_tag) AS view FROM ".$GLOBALS['table_video']." LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag WHERE video_tags LIKE '%".implode("%' OR video_tags LIKE '%", $data)."%'  GROUP BY ".$GLOBALS['table_video'].".id  LIMIT 10";
 
 // execute query
 $result = mysqli_query($conn, $sql);

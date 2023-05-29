@@ -12,7 +12,7 @@ require_once 'config.php';
 
 
 //  get home catagory
-$sql = "SELECT * FROM tbl_main_catagory ";
+$sql = "SELECT * FROM ". $GLOBALS['tbl_main_catagory'];
 
 // execute query
 $result = mysqli_query($conn, $sql);
@@ -95,7 +95,7 @@ function getVideosById($conn, $values){
     //convert value string to array
     $values = explode(",", $values);
 
-    $sql = "SELECT * FROM tbl_video WHERE id IN ('".str_replace(" ","",implode("','", $values))."')";
+    $sql = "SELECT * FROM ".$GLOBALS['table_video']." WHERE id IN ('".str_replace(" ","",implode("','", $values))."')";
 
     $result = mysqli_query($conn, $sql);
     $data = array();

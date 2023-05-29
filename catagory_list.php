@@ -27,7 +27,7 @@ if($type == "delete_item"){
  
 function getValuesAttached($conn){
     $values = $_REQUEST['values'];
-    $sql = "SELECT tbl_video.id, tbl_video.title, tbl_video.imdb, tbl_video.tag, tbl_video.desc,tbl_video.thumbnail_1x  , COUNT(user_tag) AS view FROM tbl_video  LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag WHERE tbl_video.id IN($values)  GROUP BY tbl_video.id  ORDER BY view DESC ";
+    $sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  , COUNT(user_tag) AS view FROM ".$GLOBALS['table_video']."  LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag WHERE ".$GLOBALS['table_video'].".id IN($values)  GROUP BY ".$GLOBALS['table_video'].".id  ORDER BY view DESC ";
 
     $result = mysqli_query($conn, $sql);
 
@@ -48,9 +48,9 @@ function addCatagoryLayout($conn){
     $values = $_REQUEST['values'];
 
     if($_REQUEST['mtype'] == "sub"){
-        $sql = "INSERT INTO tbl_sub_catagory  (`title`, `values`) VALUES ('$title','$values')";
+        $sql = "INSERT INTO ".$GLOBALS['tbl_sub_cataogry']."  (`title`, `values`) VALUES ('$title','$values')";
     }else{
-        $sql = "INSERT INTO tbl_main_catagory (`title`, `values`) VALUES ('$title','$values')";
+        $sql = "INSERT INTO ".$GLOBALS['tbl_main_catagory']." (`title`, `values`) VALUES ('$title','$values')";
     }
 
     if($conn -> query($sql) == TRUE){
@@ -67,9 +67,9 @@ function editCatagoriesTitle($conn){
     $values = $_REQUEST['values'];
     $id = $_REQUEST['id'];
     if($_REQUEST['mtype'] == "main"){
-        $sql = "UPDATE tbl_sub_catagory  SET `title` = '$title', `values` =  '$values' WHERE `id` =  $id";
+        $sql = "UPDATE ".$GLOBALS['tbl_sub_cataogry']."  SET `title` = '$title', `values` =  '$values' WHERE `id` =  $id";
     }else{
-        $sql = "UPDATE tbl_main_catagory  SET `title` = '$title', `values` =  '$values' WHERE `id` =  $id";
+        $sql = "UPDATE ".$GLOBALS['tbl_main_catagory']."  SET `title` = '$title', `values` =  '$values' WHERE `id` =  $id";
     }
 
     if($conn -> query($sql) == TRUE){
@@ -81,9 +81,9 @@ function editCatagoriesTitle($conn){
 
 }
 function getCatagories($conn){
-    $sql  = 'SELECT tbl_main_catagory.*, "sub" as type FROM tbl_main_catagory WHERE title  NOT LIKE "tbl%"
+    $sql  = 'SELECT '.$GLOBALS['tbl_main_catagory'].'.*, "sub" as type FROM '.$GLOBALS['tbl_main_catagory'].' WHERE title  NOT LIKE "tbl%"
     UNION 
-    SELECT tbl_sub_catagory.*, "main" as type FROM tbl_sub_catagory ';
+    SELECT '.$GLOBALS['tbl_sub_cataogry'].'.*, "main" as type FROM '.$GLOBALS['tbl_sub_cataogry'];
 
 
     // execute query
@@ -103,11 +103,11 @@ function deleteCatagories($conn){
 
     $id = $_REQUEST['id'];
     if($_REQUEST['mtype'] == "sub"){
-        $sql = "DELETE   FROM tbl_main_catagory   WHERE id = '$id'";
+        $sql = "DELETE   FROM ".$GLOBALS['tbl_main_catagory']."   WHERE id = '$id'";
     
 
     }else{
-        $sql = "DELETE  FROM  tbl_sub_catagory WHERE id = '$id'";
+        $sql = "DELETE  FROM  ".$GLOBALS['tbl_sub_cataogry']." WHERE id = '$id'";
         
 
     }

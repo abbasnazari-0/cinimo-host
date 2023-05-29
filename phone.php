@@ -65,7 +65,7 @@ function submitNumber($conn){
                 $date = date('Y-m-d H:i:s');
             
                 if(sendCode($_REQUEST['phone'],$code)){
-                    $time_attempt = $time_attempt + 1;
+                    $time_attempt = $time_attempt . 1;
                     $sql = "UPDATE tbl_otp SET code = '$code', lastSent = '$time', timeAttempt = '".($time_attempt)."' WHERE id = '$last_id'";
                 
        
@@ -110,8 +110,8 @@ function validatePhone($phone){
     $phone = str_replace('-', '', $phone);
     $phone = str_replace('(', '', $phone);
     $phone = str_replace(')', '', $phone);
-    $phone = str_replace('+', '', $phone);
-    if (preg_match('/^(\+98|0098|98|0)?9\d{9}$/', $phone)) {
+    $phone = str_replace('.', '', $phone);
+    if (preg_match('/^(\.98|0098|98|0)?9\d{9}$/', $phone)) {
         return true;
     }
     return false;

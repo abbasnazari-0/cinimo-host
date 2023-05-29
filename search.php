@@ -12,7 +12,7 @@ require_once 'config.php';
  $count = $_REQUEST['count'];
 
 // get video data
-$sql = "SELECT tbl_video.id, tbl_video.title, tbl_video.imdb, tbl_video.tag, tbl_video.desc,tbl_video.thumbnail_1x  , COUNT(user_tag) AS view FROM tbl_video  LEFT JOIN tbl_view ON tbl_view.vid_tag = tbl_video.tag WHERE tbl_video.title LIKE '%$query%'   OR tbl_video.desc LIKE '%$query%'  GROUP BY tbl_video.id  ORDER BY id, view DESC LIMIT $count";
+$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  , COUNT(user_tag) AS view FROM ".$GLOBALS['table_video']."  LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag WHERE ".$GLOBALS['table_video'].".title LIKE '%$query%'   OR ".$GLOBALS['table_video'].".desc LIKE '%$query%'  GROUP BY ".$GLOBALS['table_video'].".id  ORDER BY id, view DESC LIMIT $count";
 
 
 // execute query

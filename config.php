@@ -59,7 +59,7 @@ if(mysqli_num_rows($result) == 0){
 
   $ipData = json_decode($server_output, true);
   if(!key_exists("country", $ipData) ||  $ipData['country'] != "IR" ){
-    $GLOBALS['COUNTRY'] = "KA";
+    $GLOBALS['COUNTRY'] =  $ipData['country'];
     $GLOBALS['table_video'] = "tbl_video_fake";
     $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
     $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";

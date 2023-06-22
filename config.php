@@ -3,7 +3,7 @@
 // connect to mysql
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "nazari@0794";
 $dbname = "cinimo";
 
 // Create connection
@@ -17,6 +17,11 @@ if (!$conn) {
 
 // Change character set to utf8
 mysqli_set_charset($conn,"utf8mb4");
+
+
+header("Access-Control-Allow-Origin: https://cinimo.app");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
 
 // function that create string of random characters
@@ -59,15 +64,17 @@ if(mysqli_num_rows($result) == 0){
 
   $ipData = json_decode($server_output, true);
   if(!key_exists("country", $ipData) ||  $ipData['country'] != "IR" ){
-    $GLOBALS['COUNTRY'] =  $ipData['country'];
+    $GLOBALS['COUNTRY'] = $ipData['country'];
     $GLOBALS['table_video'] = "tbl_video_fake";
-    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
+    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_catagory_fake";
     $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";
+    $GLOBALS['tbl_reels'] = "tbl_reels_fake";
   }else{
     $GLOBALS['COUNTRY'] = "IR";
     $GLOBALS['table_video'] = "tbl_video";
-    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry";
+    $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_catagory";
     $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory";
+    $GLOBALS['tbl_reels'] = "tbl_reels";
   }
 
   
@@ -90,13 +97,15 @@ if(mysqli_num_rows($result) == 0){
     if($row['country'] != "IR"){
       $GLOBALS['COUNTRY'] = "KA";
       $GLOBALS['table_video'] = "tbl_video_fake";
-      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry_fake";
+      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_catagory_fake";
       $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory_fake";
+      $GLOBALS['tbl_reels'] = "tbl_reels_fake";
     }else{
       $GLOBALS['COUNTRY'] = "IR";
       $GLOBALS['table_video'] = "tbl_video";
-      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_cataogry";
+      $GLOBALS['tbl_sub_cataogry'] = "tbl_sub_catagory";
       $GLOBALS['tbl_main_catagory'] = "tbl_main_catagory";
+      $GLOBALS['tbl_reels'] = "tbl_reels";
     }
   }
 

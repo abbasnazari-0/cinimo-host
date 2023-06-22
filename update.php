@@ -16,11 +16,11 @@ if($type == "get"){
 
 
 function getUpdate($verion){
-    $last_version_code = 7;
+    $last_version_code = 24;
 
 
     if($last_version_code > $verion){
-        echo json_encode(array("data"=> "update available!", "link" => "https://play.google.com/store/apps/details?id=com.reels"));
+        echo json_encode(array("data"=> "update available!", "link" => "https://play.google.com/store/apps/details?id=com.arianadeveloper.world.unmovie"));
     }else{
         echo json_encode(array("data"=> "no update available!", "link" => ""));
     }

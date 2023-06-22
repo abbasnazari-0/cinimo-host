@@ -17,7 +17,7 @@ $vid_ids = str_replace("]", "", $vid_ids);
 
 
 
-$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x   FROM ".$GLOBALS['table_video']." WHERE id IN ('".str_replace(" ","",implode("','",$vid_ids))."') ";
+$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x   FROM ".$GLOBALS['table_video']." WHERE id IN ('".str_replace(" ","",implode("','",$vid_ids))."') ORDER BY RAND() ";
 
 // execute query
 $result = mysqli_query($conn, $sql);

@@ -103,6 +103,43 @@ if (mysqli_num_rows($result) > 0) {
     $row['artist_data'] = $artist_data;
     unset($row['artist_tags']);
 
+
+    // get last session time from tbl_view
+    $view_sql = "SELECT * FROM tbl_view WHERE vid_tag = '".$tag."' AND user_tag = '$user_tag' ORDER BY id DESC LIMIT 1";
+    $view_result = mysqli_query($conn, $view_sql);
+
+    if (mysqli_num_rows($view_result) > 0) {
+            while($view_row = mysqli_fetch_assoc($view_result)) {
+                // view_status = [{vid_time: 10, timestamp: 1686774646679}, {vid_time: 20, timestamp: 1686774656666}, {vid_time: 30, timestamp: 1686774666669}, {vid_time: 40, timestamp: 1686774676673}, {vid_time: 50, timestamp: 1686774686667}, {vid_time: 60, timestamp: 1686774696673}, {vid_time: 70, timestamp: 1686774706669}, {vid_time: 80, timestamp: 1686774716682}, {vid_time: 90, timestamp: 1686774726169}]
+                
+                // convert map to json
+                // $view_status = json_encode($view_row['view_status']);
+                
+                // decode json
+
+               
+                $view_status = json_decode($view_row['view_status'], true);
+
+                // $view_status =  json_decode($view_row['view_status'], true);
+
+                // // get last session time
+                // $row['last_session_time'] = $view_status[count($view_status) - 1]['vid_time'];
+
+               
+                // foreach ($view_status as $item_last) {
+                //     $row['last_session_time']= $item_last['vid_time'];
+                // }
+                $row['last_session_time'] = $view_status[count($view_status) - 1]['vid_time'];
+
+            }
+        
+         
+        }else{
+            $row['last_session_time']  = "0";
+
+        }
+
+
     $data = $row;
     
   }
@@ -188,8 +225,12 @@ function submitVideo($conn){
     // insert video data to tbl_video
     $video_sql = "INSERT INTO ".$GLOBALS['table_video']." (`title`, `imdb`, `tag`, `desc`, `artist_tags`, `thumbnail_1x`, `thumbnail_2x` ,`qualities_id`, `gallery_id`, `video_tags`) VALUES ('$title', '$imdb','$videoTag',  '$desc', '$artistTags', '$thumbnail_1x', '$thumbnail_2x', '$quaility_id', '$gallery_id', '$videoTags');";
 
+
     $multiple_insert_query = $video_quality_sql . $gallery_sql . $video_sql;
 
+   
+
+    
 
     // run  multiple insert query
     if (mysqli_multi_query($conn, $multiple_insert_query)) {

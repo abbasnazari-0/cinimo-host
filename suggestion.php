@@ -7,13 +7,13 @@ require_once 'config.php';
     die('No video_tags specified.');
 }else{
     $video_tags = $_REQUEST['video_tags'];
-    if (strpos($video_tags, ',') !== false) {
-        $video_tags = explode(',', $video_tags);
-        $video_tags = str_replace("[", "", $video_tags);
-        $video_tags = str_replace("]", "", $video_tags);
-    }else{
-       die('No video_tags specified.');
-    }
+    // if (strpos($video_tags, ',') !== false) {
+    $video_tags = explode(',', $video_tags);
+        // $video_tags = str_replace("[", "", $video_tags);
+        // $video_tags = str_replace("]", "", $video_tags);
+    // }else{
+    //    die('No video_tags specified.');
+    // }
 }
 
 if(!isset($_REQUEST['video_select_tag'])){
@@ -47,7 +47,12 @@ if (mysqli_num_rows($result) > 0) {
 
 //now should get all video id with tag id
 // AND ".$GLOBALS['table_video']."tag <> '$video_select'
-$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  , COUNT(user_tag) AS view FROM ".$GLOBALS['table_video']." LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag WHERE video_tags LIKE '%".implode("%' OR video_tags LIKE '%", $data)."%'  GROUP BY ".$GLOBALS['table_video'].".id  LIMIT 10";
+// LEFT JOIN tbl_view ON tbl_view.vid_tag = ".$GLOBALS['table_video'].".tag
+$sql = "SELECT ".$GLOBALS['table_video'].".id, ".$GLOBALS['table_video'].".title, ".$GLOBALS['table_video'].".imdb, ".$GLOBALS['table_video'].".tag, ".$GLOBALS['table_video'].".desc,".$GLOBALS['table_video'].".thumbnail_1x  FROM ".$GLOBALS['table_video']." 
+
+
+WHERE video_tags LIKE '%".implode("%' OR video_tags LIKE '%", $data)."%' AND ".$GLOBALS['table_video'].".tag <> '$video_select'  GROUP BY ".$GLOBALS['table_video'].".id ORDER BY RAND()  LIMIT 20";
+
 
 // execute query
 $result = mysqli_query($conn, $sql);

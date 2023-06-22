@@ -91,11 +91,16 @@ if (mysqli_num_rows($result) > 0) {
     echo "0 results";
 }
 
+function headerCreator($conn, $user_tag ){
+
+
+}
+
 function getVideosById($conn, $values){
     //convert value string to array
     $values = explode(",", $values);
 
-    $sql = "SELECT * FROM ".$GLOBALS['table_video']." WHERE id IN ('".str_replace(" ","",implode("','", $values))."')";
+    $sql = "SELECT * FROM ".$GLOBALS['table_video']." WHERE id IN ('".str_replace(" ","",implode("','", $values))."')  ";
 
     $result = mysqli_query($conn, $sql);
     $data = array();
